@@ -41,6 +41,18 @@ class MonthInputList extends HTMLElement {
                 expenseInput.value = Number(expenseValue).toFixed(2);
             }
         }
+        
+        // Trigger saved calculation for all rows after loading data
+        this.updateAllSavedAmounts();
+    }
+
+    updateAllSavedAmounts() {
+        const monthRows = this.querySelectorAll('month-input-row');
+        monthRows.forEach(row => {
+            if (row.updateSavedAmount) {
+                row.updateSavedAmount();
+            }
+        });
     }
 
     attachAutoSaveListeners() {

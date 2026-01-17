@@ -27,3 +27,14 @@ const formatPercentage = (value) => {
     const num = parseFloat(value) || 0;
     return `${roundToTwo(num)}%`;
 };
+
+// Export for Node.js (testing)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        roundToTwo,
+        formatCurrency,
+        validateNumericInput,
+        formatCurrencyDisplay,
+        formatPercentage
+    };
+}

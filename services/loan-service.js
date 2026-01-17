@@ -276,3 +276,8 @@ class LoanService {
         console.log('All loan data cleared');
     }
 }
+
+// Export for Node.js (testing)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = LoanService;
+}

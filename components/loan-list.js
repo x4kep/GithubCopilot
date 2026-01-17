@@ -72,9 +72,16 @@ class LoanList extends HTMLElement {
                             <div class="summary-label">Total Paid</div>
                             <div class="summary-value paid">${formatCurrencyDisplay(totalPaid)}</div>
                         </div>
-                        <div class="summary-item">
+                        <div class="summary-item summary-item-progress">
                             <div class="summary-label">Overall Progress</div>
-                            <div class="summary-value progress">${formatPercentage(overallProgress)}</div>
+                            <div class="summary-progress-container">
+                                <div class="summary-progress-header">
+                                    <span class="summary-progress-percentage">${formatPercentage(overallProgress)}</span>
+                                </div>
+                                <div class="summary-progress-bar">
+                                    <div class="summary-progress-fill" style="width: ${overallProgress}%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

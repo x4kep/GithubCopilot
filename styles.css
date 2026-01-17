@@ -9,6 +9,12 @@ body {
 }
 
 /* Header Styles */
+.app-logo {
+    height: 60px;
+    width: auto;
+    margin-right: 15px;
+}
+
 .app-title {
     color: #4CAF50;
 }
@@ -436,6 +442,43 @@ body {
     color: #2196F3;
     padding-left: 10px;
     font-size: 12px;
+}
+
+.summary-item-progress {
+    flex: 1.5;
+    min-width: 200px;
+}
+
+.summary-progress-container {
+    margin-top: 0.5rem;
+}
+
+.summary-progress-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+.summary-progress-percentage {
+    font-size: 1.25rem;
+    color: #4CAF50;
+    font-weight: 700;
+}
+
+.summary-progress-bar {
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.summary-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50 0%, #81C784 100%);
+    border-radius: 12px;
+    transition: width 0.5s ease;
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
 }
 
 .loan-cards {

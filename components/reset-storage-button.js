@@ -26,16 +26,29 @@ class ResetStorageButton extends HTMLElement {
     }
 
     handleReset() {
-        const confirmed = confirm('Are you sure you want to delete all data for all years? This action cannot be undone.');
+        const confirmed = confirm('Are you sure you want to delete all data (income, expenses, and loans) for all years? This action cannot be undone.');
         
         if (confirmed) {
             this.clearAllData();
-            this.reloadPage();
+            this.showResetMessage();
+            setTimeout(() => this.reloadPage(), 1500);
         }
     }
 
     clearAllData() {
+        // Clear all data including loans
         localStorage.clear();
+        console.log('All data cleared: income, expenses, loans, and settings');
+    }
+
+    showResetMessage() {
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-info alert-dismissible fade show position-fixed';
+        alert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+        alert.innerHTML = `
+            <strong>Data Reset!</strong> All data has been cleared. Reloading...
+        `;
+        document.body.appendChild(alert);
     }
 
     reloadPage() {

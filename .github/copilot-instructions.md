@@ -43,3 +43,7 @@ Use CSS variables for design tokens.
 Design responsive styles by default.
 Avoid hardcoded magic numbers.
 Optimize CSS for readability and maintainability.
+
+## GENERAL
+
+Always create UI components but later create javascript files to handle the logic and data separately.

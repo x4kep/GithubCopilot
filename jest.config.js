@@ -9,7 +9,11 @@ module.exports = {
   coverageReporters: ['text', 'lcov', 'html'],
   testMatch: [
     '**/__tests__/**/*.test.js',
-    '**/?(*.)+(spec|test).js'
+    '**/tests/**/*.test.js'
+  ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/e2e/'
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js']
 };

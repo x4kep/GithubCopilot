@@ -49,14 +49,14 @@ class LoanForm extends HTMLElement {
         if (title) {
             title.innerHTML = this.mode === 'edit' 
                 ? '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="margin-right: 8px;" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/></svg>Edit Loan'
-                : '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="margin-right: 8px;" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>Add New Loan';
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="margin-right: 8px;" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>Add Loan';
         }
 
         const submitBtn = this.querySelector('.submit-loan-btn');
         if (submitBtn) {
             submitBtn.innerHTML = this.mode === 'edit'
                 ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="margin-right: 4px;" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg>Update Loan'
-                : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="margin-right: 4px;" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>Add Loan';
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="margin-right: 4px;" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>Save Loan';
         }
     }
 
@@ -66,7 +66,7 @@ class LoanForm extends HTMLElement {
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="loanFormModalLabel">Add New Loan</h5>
+                            <h5 class="modal-title" id="loanFormModalLabel">Add Loan</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -113,10 +113,10 @@ class LoanForm extends HTMLElement {
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="loanTerm" class="form-label">Loan Term (months) *</label>
+                                        <label for="loanTermMonths" class="form-label">Loan Term (months) *</label>
                                         <input type="number" 
                                                class="form-control" 
-                                               id="loanTerm" 
+                                               id="loanTermMonths" 
                                                placeholder="360" 
                                                step="1" 
                                                min="1" 
@@ -151,7 +151,7 @@ class LoanForm extends HTMLElement {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="margin-right: 4px;" viewBox="0 0 16 16">
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                 </svg>
-                                Add Loan
+                                Save Loan
                             </button>
                         </div>
                     </div>
@@ -164,7 +164,7 @@ class LoanForm extends HTMLElement {
         const nameInput = this.querySelector('#loanName');
         const principalInput = this.querySelector('#loanPrincipal');
         const rateInput = this.querySelector('#loanInterestRate');
-        const termInput = this.querySelector('#loanTerm');
+        const termInput = this.querySelector('#loanTermMonths');
         const startDateInput = this.querySelector('#loanStartDate');
 
         if (nameInput) nameInput.value = loan.name || '';
@@ -199,7 +199,7 @@ class LoanForm extends HTMLElement {
         // Real-time monthly payment preview
         const principalInput = this.querySelector('#loanPrincipal');
         const rateInput = this.querySelector('#loanInterestRate');
-        const termInput = this.querySelector('#loanTerm');
+        const termInput = this.querySelector('#loanTermMonths');
 
         [principalInput, rateInput, termInput].forEach(input => {
             if (input) {
@@ -226,7 +226,7 @@ class LoanForm extends HTMLElement {
     updateMonthlyPaymentPreview() {
         const principalInput = this.querySelector('#loanPrincipal');
         const rateInput = this.querySelector('#loanInterestRate');
-        const termInput = this.querySelector('#loanTerm');
+        const termInput = this.querySelector('#loanTermMonths');
         const previewValue = this.querySelector('.monthly-payment-value');
 
         if (!principalInput || !rateInput || !termInput || !previewValue) return;
@@ -261,7 +261,7 @@ class LoanForm extends HTMLElement {
         const nameInput = this.querySelector('#loanName');
         const principalInput = this.querySelector('#loanPrincipal');
         const rateInput = this.querySelector('#loanInterestRate');
-        const termInput = this.querySelector('#loanTerm');
+        const termInput = this.querySelector('#loanTermMonths');
         const startDateInput = this.querySelector('#loanStartDate');
 
         const loanData = {

@@ -31,6 +31,7 @@ class IncomeExpenseChart extends HTMLElement {
     updateChart() {
         const { incomeData, expenseData } = DataService.getData();
         const canvas = this.querySelector('#incomeExpenseChart');
+        const selectedYear = YearSelector.getSelectedYear();
         
         if (!canvas) return;
 
@@ -65,18 +66,18 @@ class IncomeExpenseChart extends HTMLElement {
                     }
                 ]
             },
-            options: this.getChartOptions()
+            options: this.getChartOptions(selectedYear)
         });
     }
 
-    getChartOptions() {
+    getChartOptions(year) {
         return {
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
                 title: {
                     display: true,
-                    text: 'Monthly Income vs Expenses',
+                    text: `Monthly Income vs Expenses - ${year}`,
                     font: {
                         size: 20,
                         weight: 'bold'
@@ -137,7 +138,8 @@ class IncomeExpenseChart extends HTMLElement {
         // Create temporary link and trigger download
         const link = document.createElement('a');
         const date = new Date().toISOString().split('T')[0];
-        link.download = `bucks2bar-chart-${date}.png`;
+        const selectedYear = YearSelector.getSelectedYear();
+        link.download = `incomeexpensetracker-chart-${selectedYear}-${date}.png`;
         link.href = url;
         link.click();
     }

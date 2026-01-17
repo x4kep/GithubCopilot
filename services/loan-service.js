@@ -1,41 +1,38 @@
 // Loan Service - Manages loan data and calculations
 class LoanService {
     /**
-     * Get all loans for a specific year
-     * @param {number} year - The year to get loans for
+     * Get all loans (global, not year-specific)
      * @returns {Array} Array of loan objects
      */
-    static getLoansForYear(year) {
-        const storedLoans = localStorage.getItem(`loans_${year}`);
+    static getAllLoans() {
+        const storedLoans = localStorage.getItem('loans');
         
         if (storedLoans) {
             const parsedLoans = JSON.parse(storedLoans);
-            console.log(`Loans loaded for year ${year}:`, parsedLoans);
+            console.log('Loans loaded:', parsedLoans);
             return parsedLoans;
         }
         
-        console.log(`No loans found for year ${year}, returning empty array`);
+        console.log('No loans found, returning empty array');
         return [];
     }
 
     /**
-     * Save all loans for a specific year
-     * @param {number} year - The year to save loans for
+     * Save all loans (global)
      * @param {Array} loans - Array of loan objects to save
      */
-    static saveLoansForYear(year, loans) {
-        localStorage.setItem(`loans_${year}`, JSON.stringify(loans));
-        console.log(`Loans saved for year ${year}:`, loans);
+    static saveAllLoans(loans) {
+        localStorage.setItem('loans', JSON.stringify(loans));
+        console.log('Loans saved:', loans);
     }
 
     /**
-     * Add or update a loan for a specific year
-     * @param {number} year - The year to add the loan to
+     * Add or update a loan
      * @param {Object} loan - Loan object to add/update
      * @returns {Object} The saved loan with calculated fields
      */
-    static saveLoan(year, loan) {
-        const loans = this.getLoansForYear(year);
+    static saveLoan(loan) {
+        const loans = this.getAllLoans();
         
         // Generate ID if new loan
         if (!loan.id) {
@@ -67,30 +64,28 @@ class LoanService {
             loans.push(loan);
         }
 
-        this.saveLoansForYear(year, loans);
+        this.saveAllLoans(loans);
         return loan;
     }
 
     /**
-     * Delete a loan from a specific year
-     * @param {number} year - The year to delete the loan from
+     * Delete a loan
      * @param {string} loanId - ID of the loan to delete
      */
-    static deleteLoan(year, loanId) {
-        const loans = this.getLoansForYear(year);
+    static deleteLoan(loanId) {
+        const loans = this.getAllLoans();
         const filteredLoans = loans.filter(loan => loan.id !== loanId);
-        this.saveLoansForYear(year, filteredLoans);
-        console.log(`Loan ${loanId} deleted from year ${year}`);
+        this.saveAllLoans(filteredLoans);
+        console.log(`Loan ${loanId} deleted`);
     }
 
     /**
      * Get a single loan by ID
-     * @param {number} year - The year to search in
      * @param {string} loanId - ID of the loan to find
      * @returns {Object|null} The loan object or null if not found
      */
-    static getLoan(year, loanId) {
-        const loans = this.getLoansForYear(year);
+    static getLoan(loanId) {
+        const loans = this.getAllLoans();
         return loans.find(loan => loan.id === loanId) || null;
     }
 
@@ -163,6 +158,17 @@ class LoanService {
             }
         }
 
+        // Apply any remaining overpayments that haven't been processed yet
+        // (overpayments made after the current month or for future months)
+        if (loan.overpayments && loan.overpayments.length > 0) {
+            const totalOverpayments = loan.overpayments.reduce((sum, op) => sum + op.amount, 0);
+            const processedOverpayments = loan.overpayments
+                .filter(op => op.month <= monthsElapsed)
+                .reduce((sum, op) => sum + op.amount, 0);
+            const unprocessedOverpayments = totalOverpayments - processedOverpayments;
+            balance -= unprocessedOverpayments;
+        }
+
         return Math.max(0, roundToTwo(balance));
     }
 
@@ -186,17 +192,16 @@ class LoanService {
 
     /**
      * Apply an overpayment to a loan
-     * @param {number} year - Year the loan belongs to
      * @param {string} loanId - ID of the loan
      * @param {number} amount - Overpayment amount
      * @param {number} month - Month number (1-based, counting from loan start)
      * @returns {Object} Updated loan object
      */
-    static applyOverpayment(year, loanId, amount, month) {
-        const loan = this.getLoan(year, loanId);
+    static applyOverpayment(loanId, amount, month) {
+        const loan = this.getLoan(loanId);
         
         if (!loan) {
-            console.error(`Loan ${loanId} not found for year ${year}`);
+            console.error(`Loan ${loanId} not found`);
             return null;
         }
 
@@ -234,7 +239,7 @@ class LoanService {
         }
 
         // Save updated loan
-        return this.saveLoan(year, loan);
+        return this.saveLoan(loan);
     }
 
     /**
@@ -264,15 +269,10 @@ class LoanService {
     }
 
     /**
-     * Clear all loans for all years
+     * Clear all loans
      */
     static clearAllLoans() {
-        const keys = Object.keys(localStorage);
-        keys.forEach(key => {
-            if (key.startsWith('loans_')) {
-                localStorage.removeItem(key);
-            }
-        });
+        localStorage.removeItem('loans');
         console.log('All loan data cleared');
     }
 }

@@ -28,7 +28,6 @@ class OverpaymentForm extends HTMLElement {
 
     openForLoan(loan) {
         this.loan = loan;
-        this.year = YearSelector.getSelectedYear();
         this.updateModalContent();
         if (this.bsModal) {
             this.bsModal.show();
@@ -62,7 +61,7 @@ class OverpaymentForm extends HTMLElement {
                                 <div class="mb-3">
                                     <label for="overpaymentAmount" class="form-label">Overpayment Amount *</label>
                                     <div class="input-group">
-                                        <span class="input-group-text">$</span>
+                                        <span class="input-group-text">€</span>
                                         <input type="number" 
                                                class="form-control" 
                                                id="overpaymentAmount" 
@@ -281,7 +280,6 @@ class OverpaymentForm extends HTMLElement {
 
         // Apply overpayment through service
         const updatedLoan = LoanService.applyOverpayment(
-            this.year,
             this.loan.id,
             amount,
             monthsSinceStart
@@ -292,7 +290,7 @@ class OverpaymentForm extends HTMLElement {
             if (note && updatedLoan.overpayments.length > 0) {
                 const lastOverpayment = updatedLoan.overpayments[updatedLoan.overpayments.length - 1];
                 lastOverpayment.note = note;
-                LoanService.saveLoan(this.year, updatedLoan);
+                LoanService.saveLoan(updatedLoan);
             }
 
             // Show success message

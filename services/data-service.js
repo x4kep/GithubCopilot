@@ -1,5 +1,9 @@
-// Data Service
+// Data Service - Manages income and expense data storage
 class DataService {
+    /**
+     * Get current income and expense data from DOM inputs
+     * @returns {Object} Object containing incomeData and expenseData arrays
+     */
     static getData() {
         const incomeData = [];
         const expenseData = [];
@@ -15,6 +19,10 @@ class DataService {
         return { incomeData, expenseData };
     }
 
+    /**
+     * Save income and expense data for a specific year
+     * @param {number} year - The year to save data for
+     */
     static saveDataForYear(year) {
         const { incomeData, expenseData } = this.getData();
         const yearData = {
@@ -26,6 +34,11 @@ class DataService {
         console.log(`Data saved for year ${year}:`, yearData);
     }
 
+    /**
+     * Load income and expense data for a specific year
+     * @param {number} year - The year to load data for
+     * @returns {Object} Object containing income and expense arrays (12 months each)
+     */
     static loadDataForYear(year) {
         const storedData = localStorage.getItem(`data_${year}`);
         
@@ -43,6 +56,10 @@ class DataService {
         };
     }
 
+    /**
+     * Auto-save data with debouncing (500ms delay)
+     * @param {number} year - The year to save data for
+     */
     static autoSave(year) {
         // Debounced auto-save
         if (this.saveTimeout) {

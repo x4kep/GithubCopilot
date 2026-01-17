@@ -2,24 +2,15 @@
 class LoanList extends HTMLElement {
     constructor() {
         super();
-        this.year = YearSelector.getSelectedYear();
     }
 
     connectedCallback() {
         this.render();
 
-        // Listen for year changes
-        window.addEventListener('year-changed', () => this.handleYearChange());
-
         // Listen for loan updates
         document.addEventListener('loan-saved', () => this.refresh());
         document.addEventListener('loan-deleted', () => this.refresh());
         document.addEventListener('loan-updated', () => this.refresh());
-    }
-
-    handleYearChange() {
-        this.year = YearSelector.getSelectedYear();
-        this.refresh();
     }
 
     refresh() {
@@ -29,7 +20,7 @@ class LoanList extends HTMLElement {
     render() {
         this.className = 'loan-list-container';
         
-        const loans = LoanService.getLoansForYear(this.year);
+        const loans = LoanService.getAllLoans();
 
         if (loans.length === 0) {
             this.innerHTML = `
@@ -57,7 +48,7 @@ class LoanList extends HTMLElement {
                 <div class="loan-list-header">
                     <div class="header-content">
                         <div class="header-left">
-                            <h4>Your Loans for ${this.year}</h4>
+                            <h4>Your Loans</h4>
                             <div class="loan-count">${loans.length} ${loans.length === 1 ? 'Loan' : 'Loans'}</div>
                         </div>
                         <button class="btn btn-primary add-loan-btn">

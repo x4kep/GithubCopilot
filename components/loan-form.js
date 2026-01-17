@@ -30,7 +30,6 @@ class LoanForm extends HTMLElement {
     openForm(loan = null, mode = 'add') {
         this.loan = loan;
         this.mode = mode;
-        this.year = YearSelector.getSelectedYear();
         
         if (mode === 'edit' && loan) {
             this.populateForm(loan);
@@ -87,7 +86,7 @@ class LoanForm extends HTMLElement {
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="loanPrincipal" class="form-label">Principal Amount ($) *</label>
+                                        <label for="loanPrincipal" class="form-label">Principal Amount (€) *</label>
                                         <input type="number" 
                                                class="form-control" 
                                                id="loanPrincipal" 
@@ -280,7 +279,7 @@ class LoanForm extends HTMLElement {
         }
 
         // Save loan
-        const savedLoan = LoanService.saveLoan(this.year, loanData);
+        const savedLoan = LoanService.saveLoan(loanData);
 
         if (savedLoan) {
             this.showSuccessMessage(this.mode === 'edit' ? 'updated' : 'added');

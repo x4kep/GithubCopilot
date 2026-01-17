@@ -17,7 +17,7 @@ const formatCurrencyDisplay = (value) => {
     const num = parseFloat(value) || 0;
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'EUR',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     }).format(num);
